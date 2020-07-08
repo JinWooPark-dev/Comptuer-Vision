@@ -9,21 +9,20 @@
 	@author		Jinwoo Park
 	@date		2020-07-04
 */
-#include <iostream>
-#include "opencv.hpp"
-#include "core/core.hpp"
-#include "highgui/highgui.hpp"
-
-using namespace std;
-using namespace cv;
+#include "image_filtering.h"
 
 int main()
 {
-	Mat test = imread("E:\\project\\ComputerVision\\inputImage\\001.jpg", 1);
+	Mat inputImage = imread("E:\\project\\ComputerVision\\inputImage\\001.jpg", 0);
 
-	imshow("test", test);
-	waitKey(0);
+	int width	= inputImage.cols;
+	int height	= inputImage.rows;
+
+	//Image_Filtering
+	Mat boxFilterImage = Mat::zeros(height, width, CV_8U);
+	boxFiltering(inputImage, boxFilterImage, 11, 11);
 	
+	imwrite("E:\\project\\ComputerVision\\outputImage\\boxFilterImage.png", boxFilterImage);
 
 	return 0;
 }
