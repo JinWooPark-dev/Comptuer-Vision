@@ -17,8 +17,12 @@
 #include "opencv.hpp"
 #include "core/core.hpp"
 #include "highgui/highgui.hpp"
+#include <math.h>
 
 using namespace std;
 using namespace cv;
+
+#define PI CV_PI
+#define	e	(2.71828182845904523536)
 
 #endif

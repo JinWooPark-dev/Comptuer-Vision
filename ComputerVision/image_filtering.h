@@ -9,4 +9,10 @@ void boxFiltering(const Mat input,			///< inputImage
 						Mat output,			///< outputImage
 						int filterSizeX,	///< filterSizeX
 						int filterSizeY);	///< filterSizeY
+
+/// filtering the image using gaussian methond
+void gaussianFiltering(const	Mat input,			///< inputImage
+								Mat output,			///< outputImage
+								int filterSizeX,	///< filterSizeX
+								int filterSizeY);	///< filterSizeY
 #endif

@@ -19,10 +19,15 @@ int main()
 	int height	= inputImage.rows;
 
 	//Image_Filtering
+	/* 1. boxFilter
 	Mat boxFilterImage = Mat::zeros(height, width, CV_8U);
-	boxFiltering(inputImage, boxFilterImage, 11, 11);
-	
+	boxFiltering(inputImage, boxFilterImage, 11, 11);	
 	imwrite("E:\\project\\ComputerVision\\outputImage\\boxFilterImage.png", boxFilterImage);
+	/**/
 
+	Mat gaussianImage = Mat::zeros(height, width, CV_8U);
+	gaussianFiltering(inputImage, gaussianImage, 11, 11);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\gaussianImage.png", gaussianImage);	
+	
 	return 0;
 }
