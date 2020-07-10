@@ -25,9 +25,15 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\boxFilterImage.png", boxFilterImage);
 	/**/
 
+	/* 2. Gaussian Filter
 	Mat gaussianImage = Mat::zeros(height, width, CV_8U);
 	gaussianFiltering(inputImage, gaussianImage, 11, 11);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\gaussianImage.png", gaussianImage);	
-	
+	/**/
+
+	Mat separableKernelImage = Mat::zeros(height, width, CV_8U);
+	separableKernel(inputImage, separableKernelImage, 11, 11);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\separableKernelImage.png", separableKernelImage);	
+
 	return 0;
 }

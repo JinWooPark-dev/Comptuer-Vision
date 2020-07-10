@@ -15,4 +15,10 @@ void gaussianFiltering(const	Mat input,			///< inputImage
 								Mat output,			///< outputImage
 								int filterSizeX,	///< filterSizeX
 								int filterSizeY);	///< filterSizeY
+
+/// filtering the image using separable gaussian methond
+void separableKernel(const	Mat input,			///< inputImage
+							Mat output,			///< outputImage
+							int filterSizeX,		///< filterSizeX
+							int filterSizeY);		///< filterSizeY
 #endif

@@ -86,3 +86,62 @@ void gaussianFiltering(const	Mat input,			///< inputImage
 	}
 
 }
+
+/// filtering the image using separable gaussian methond
+void separableKernel(const	Mat input,			///< inputImage
+							Mat output,			///< outputImage
+							int filterSizeX,		///< filterSizeX
+							int filterSizeY)		///< filterSizeY
+{
+	int width	= input.cols;
+	int height	= input.rows;
+
+	float sigma = 3.f;
+
+	Mat outputImageX	= Mat::zeros(height, width, CV_8U);
+	Mat paddingImageX	= Mat::zeros(height, width + (filterSizeX - 1), CV_8U);
+	Mat paddingImageY	= Mat::zeros(height + (filterSizeY - 1), width, CV_8U);
+	Mat gaussianX		= Mat::zeros(1, filterSizeX, CV_32F);
+	Mat gaussianY		= Mat::zeros(filterSizeY, 1, CV_32F);
+
+	for (int x = -(filterSizeX / 2); x <= (filterSizeX / 2); x++) {
+		gaussianX.at<float>(0, x + filterSizeX / 2) = (1/ (sqrt(2 * PI) * sigma)) * exp(-1 * (pow(x, 2)) / (2 * pow(sigma, 2)) );
+	}
+
+	for (int y = -(filterSizeY / 2); y <= (filterSizeY/2); y++) {
+		gaussianY.at<float>(y + filterSizeY/2, 0) = (1/(sqrt(2 * PI) * sigma)) * exp(-1 * (pow(y, 2)) / (2 * pow(sigma, 2)) );
+	}
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			paddingImageY.at<uchar>(y + (filterSizeY - 1)/2, x) = input.at<uchar>(y, x);
+		}
+	}
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			float filterValue = 0.f;
+			for (int i = 0; i < filterSizeX; i++) {
+				filterValue += paddingImageY.at<uchar>(y + i, x) * gaussianY.at<float>(i, 0);
+			}
+
+			outputImageX.at<uchar>(y, x) = filterValue;
+		}
+	}
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			paddingImageX.at<uchar>(y, x + (filterSizeX - 1) / 2) = outputImageX.at<uchar>(y, x);
+		}
+	}
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			float filterValue = 0.f;
+			for (int i = 0; i < filterSizeY; i++) {
+				filterValue += paddingImageX.at<uchar>(y, x + i) * gaussianX.at<float>(0, i);
+			}
+			output.at<uchar>(y, x) = filterValue;
+		}
+	}
+}
