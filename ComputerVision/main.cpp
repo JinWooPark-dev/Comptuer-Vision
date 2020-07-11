@@ -31,9 +31,15 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\gaussianImage.png", gaussianImage);	
 	/**/
 
+	/* 3. Seprable Kernel
 	Mat separableKernelImage = Mat::zeros(height, width, CV_8U);
 	separableKernel(inputImage, separableKernelImage, 11, 11);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\separableKernelImage.png", separableKernelImage);	
+	/**/
+
+	Mat sharpImage	= Mat::zeros(height, width, CV_8U);
+	imageSharpening(inputImage, sharpImage, 11, 11);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\sharpImage.png", sharpImage);	
 
 	return 0;
 }

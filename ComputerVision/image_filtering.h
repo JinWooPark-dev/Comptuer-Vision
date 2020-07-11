@@ -21,4 +21,11 @@ void separableKernel(const	Mat input,			///< inputImage
 							Mat output,			///< outputImage
 							int filterSizeX,		///< filterSizeX
 							int filterSizeY);		///< filterSizeY
+
+/// make the sharpening image
+void imageSharpening(const	Mat input,			///< inputImage	
+							Mat output,			///< outputImage
+							int filterSizeX,		///< filterSizeX
+							int filterSizeY);		///< filterSizeY
+
 #endif

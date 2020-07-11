@@ -145,3 +145,21 @@ void separableKernel(const	Mat input,			///< inputImage
 		}
 	}
 }
+
+/// make the sharpening image
+void imageSharpening(const	Mat input,			///< inputImage	
+							Mat output,			///< outputImage
+							int filterSizeX,		///< filterSizeX
+							int filterSizeY)		///< filterSizeY	
+{
+	int width	= input.cols;
+	int height	= input.rows;
+
+	Mat detail		= Mat::zeros(height, width, CV_8U);
+	Mat smoothed	= Mat::zeros(height, width, CV_8U);
+
+	separableKernel(input, smoothed, filterSizeX, filterSizeY);
+
+	detail = input - smoothed;
+	output = input + detail;
+}
