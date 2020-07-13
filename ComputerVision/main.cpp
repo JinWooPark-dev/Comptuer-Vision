@@ -13,7 +13,7 @@
 
 int main()
 {
-	Mat inputImage = imread("E:\\project\\ComputerVision\\inputImage\\001.jpg", 0);
+	Mat inputImage = imread("E:\\project\\ComputerVision\\inputImage\\son.jpg", 0);
 
 	int width	= inputImage.cols;
 	int height	= inputImage.rows;
@@ -37,9 +37,15 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\separableKernelImage.png", separableKernelImage);	
 	/**/
 
+	/* 4. Sharpeing image
 	Mat sharpImage	= Mat::zeros(height, width, CV_8U);
 	imageSharpening(inputImage, sharpImage, 11, 11);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\sharpImage.png", sharpImage);	
+	/**/
 
+	Mat saltPapperNoiseImage = Mat::zeros(height, width, CV_8U);
+	saltPepperNoise(inputImage, saltPapperNoiseImage, 0.1);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\sharpImage.png", saltPapperNoiseImage);	
+	
 	return 0;
 }

@@ -163,3 +163,25 @@ void imageSharpening(const	Mat input,			///< inputImage
 	detail = input - smoothed;
 	output = input + detail;
 }
+
+/// make salt and pepper noise image
+void saltPepperNoise(const	Mat input,				///< inputImage	
+							Mat output,				///< outputImage
+							double noiseRatio)		///< percentage of noiseratio
+{
+	int height	= input.rows;
+	int width	= input.cols;
+
+	int noisePixels = (int)((double)(height * width) * noiseRatio);
+
+	for (int i = 0; i < noisePixels; i++) {
+		int r	= rand() % height;
+		int c	= rand() % width;
+
+		int pixel	= (rand() % 2 == 1) ? 255 : 0;
+
+		output.at<uchar>(r, c) = pixel;
+	}
+
+	output += input;
+}

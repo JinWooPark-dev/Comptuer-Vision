@@ -28,4 +28,8 @@ void imageSharpening(const	Mat input,			///< inputImage
 							int filterSizeX,		///< filterSizeX
 							int filterSizeY);		///< filterSizeY
 
+/// make salt and pepper noise image
+void saltPepperNoise(const	Mat input,				///< inputImage	
+							Mat output,				///< outputImage
+							double noiseRatio);		///< percentage of noiseratio
 #endif

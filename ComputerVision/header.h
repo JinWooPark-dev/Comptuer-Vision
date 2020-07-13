@@ -18,6 +18,7 @@
 #include "core/core.hpp"
 #include "highgui/highgui.hpp"
 #include <math.h>
+#include <time.h>
 
 using namespace std;
 using namespace cv;
