@@ -185,3 +185,22 @@ void saltPepperNoise(const	Mat input,				///< inputImage
 
 	output += input;
 }
+
+/// make gaussian noise image
+void gaussianNoise(const	Mat input,		///< inputImage	
+							Mat output)		///< outputImage
+{
+	int height	= input.rows;
+	int width	= input.cols;
+
+	Mat gaussianValue	= Mat::zeros(1, 1, CV_32F);
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			randn(gaussianValue, 127, 10);
+			output.at<uchar>(y, x) = gaussianValue.at<uchar>(0, 0);
+		}
+	}
+	output	+= input;
+	output	-= 127;
+}

@@ -43,9 +43,15 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\sharpImage.png", sharpImage);	
 	/**/
 
+	/* 5. salt and papper noise image
 	Mat saltPapperNoiseImage = Mat::zeros(height, width, CV_8U);
 	saltPepperNoise(inputImage, saltPapperNoiseImage, 0.1);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\sharpImage.png", saltPapperNoiseImage);	
-	
+	/**/
+
+	Mat gaussianNoiseImage = Mat::zeros(height, width, CV_8U);
+	gaussianNoise(inputImage, gaussianNoiseImage);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\gaussianNoiseImage.png", gaussianNoiseImage);	
+
 	return 0;
 }

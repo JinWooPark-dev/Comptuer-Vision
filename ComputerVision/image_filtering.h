@@ -32,4 +32,8 @@ void imageSharpening(const	Mat input,			///< inputImage
 void saltPepperNoise(const	Mat input,				///< inputImage	
 							Mat output,				///< outputImage
 							double noiseRatio);		///< percentage of noiseratio
+
+/// make gaussian noise image
+void gaussianNoise(const	Mat input,		///< inputImage	
+							Mat output);		///< outputImage
 #endif
