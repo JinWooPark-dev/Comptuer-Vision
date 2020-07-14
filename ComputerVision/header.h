@@ -19,6 +19,8 @@
 #include "highgui/highgui.hpp"
 #include <math.h>
 #include <time.h>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
 using namespace cv;

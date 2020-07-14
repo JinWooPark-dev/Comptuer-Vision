@@ -36,4 +36,10 @@ void saltPepperNoise(const	Mat input,				///< inputImage
 /// make gaussian noise image
 void gaussianNoise(const	Mat input,		///< inputImage	
 							Mat output);		///< outputImage
+
+/// filtering the image using separable median methond
+void medianFiltering(const	Mat input,			///< inputImage
+							Mat output,			///< outputImage
+							int filterSizeX,		///< filterSizeX
+							int filterSizeY);		///< filterSizeY
 #endif

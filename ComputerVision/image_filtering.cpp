@@ -204,3 +204,29 @@ void gaussianNoise(const	Mat input,		///< inputImage
 	output	+= input;
 	output	-= 127;
 }
+
+/// filtering the image using separable median methond
+void medianFiltering(const	Mat input,			///< inputImage
+							Mat output,			///< outputImage
+							int filterSizeX,		///< filterSizeX
+							int filterSizeY)		///< filterSizeY
+{
+	int height	= input.rows;
+	int width	= input.cols;
+
+	Mat window	= Mat::zeros(filterSizeY, filterSizeX, CV_8U);
+
+	for (int y = 0; y < height - (filterSizeY - 1); y++) {
+		for (int x = 0; x < width - (filterSizeX -1); x++) {
+			vector<uchar> windowValue;	
+			
+			for (int i = 0; i < filterSizeY; i++) {
+				for (int j = 0; j < filterSizeX; j++) {
+					windowValue.push_back(input.at<uchar>(y + i, x + j));
+				}
+			}
+			sort(windowValue.begin(), windowValue.end());
+			output.at<uchar>(y, x) = windowValue[windowValue.size() / 2];			
+		}
+	}
+}
