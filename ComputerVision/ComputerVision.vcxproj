@@ -117,10 +117,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="edge.cpp" />
     <ClCompile Include="image_filtering.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="edge.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="image_filtering.h" />
   </ItemGroup>

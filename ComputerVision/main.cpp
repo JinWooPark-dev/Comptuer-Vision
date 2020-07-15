@@ -10,6 +10,7 @@
 	@date		2020-07-04
 */
 #include "image_filtering.h"
+#include "edge.h"
 
 int main()
 {
@@ -54,10 +55,19 @@ int main()
 	gaussianNoise(inputImage, gaussianNoiseImage);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\gaussianNoiseImage.png", gaussianNoiseImage);
 	/**/
-
+	/* 7. medianFilter image
 	Mat medianFilterImage = Mat::zeros(height, width, CV_8U);
 	medianFiltering(inputImage, medianFilterImage, 5, 5);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\medianFilterImage.png", medianFilterImage);
+	/**/
+
+	Mat prewittFilterImageX = Mat::zeros(height, width, CV_32F);
+	Mat prewittFilterImageY = Mat::zeros(height, width, CV_32F);
+
+	prewittFilter(inputImage, prewittFilterImageX, prewittFilterImageY);
+
+	imwrite("E:\\project\\ComputerVision\\outputImage\\prewittFilterImageX.png", prewittFilterImageX);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\prewittFilterImageY.png", prewittFilterImageY);
 
 	return 0;
 }

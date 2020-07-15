@@ -1,0 +1,24 @@
+/**
+	@mainpage   Computer Vison Assignment
+	@brief      Edge headerfile
+
+	@section    detail Detailed Description
+	@details    include Edge function.
+
+	@section    author Author Information
+	@author     Jinwoo Park
+	@date       2020-07-15
+*/
+
+#ifndef EDGE_H
+#define EDGE_H
+
+#include "header.h"
+
+/// filtering the image by using prewitt method
+void prewittFilter(const	Mat input,					///< inputImage
+							Mat prewittFilterImageX,	///< prewittFilterImageX
+							Mat prewittFilterImageY);	///< prewittFilterImageY
+
+
+#endif
