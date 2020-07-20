@@ -91,3 +91,122 @@ void prewittFilter(const	Mat input,					///< inputImage
 	prewittFilterImageX += 127;
 	prewittFilterImageX.convertTo(prewittFilterImageX, CV_8U);
 }
+
+/// filtering the image by using sobel method also include magnitudeimage and nonmaximumsuppressionimage
+void sobelFilter(const		Mat input,						///< input image
+							Mat sobelFilterImageX,			///< sobelFilterImageX
+							Mat	sobelFilterImageY,			///< sobelFilterImageY
+							Mat magnitudeSobelImage,		///< magnitudeSobelImage
+							Mat nonMaximumSuppressionImage)	///< nonMaximumSuppressionImage
+{
+	const int width		= input.cols;
+	const int height	= input.rows;
+
+	Mat sobelX			= Mat::zeros(3, 3, CV_32F);
+	Mat sobelY			= Mat::zeros(3, 3, CV_32F);
+	Mat paddingIMageX	= Mat::zeros(height + 2, width + 2, CV_8U);
+	Mat paddingIMageY	= Mat::zeros(height + 2, width + 2, CV_8U);
+	Mat gradientDegree	= Mat::zeros(height, width, CV_32F);
+
+	sobelX.at<float>(0, 0)	= -1.f;
+	sobelX.at<float>(0, 1)	= 0.f;
+	sobelX.at<float>(0, 2)	= 1.f;
+	sobelX.at<float>(1, 0)	= -2.f;
+	sobelX.at<float>(1, 1)	= 0.f;
+	sobelX.at<float>(1, 2)	= 2.f;
+	sobelX.at<float>(2, 0)	= -1.f;
+	sobelX.at<float>(2, 1)	= 0.f;
+	sobelX.at<float>(2, 2)	= 1.f;
+
+	sobelY.at<float>(0, 0)	= 1.f;
+	sobelY.at<float>(0, 1)	= 2.f;
+	sobelY.at<float>(0, 2)	= 1.f;
+	sobelY.at<float>(1, 0)	= 0.f;
+	sobelY.at<float>(1, 1)	= 0.f;
+	sobelY.at<float>(1, 2)	= 0.f;
+	sobelY.at<float>(2, 0)	= -1.f;
+	sobelY.at<float>(2, 1)	= -2.f;
+	sobelY.at<float>(2, 2)	= -1.f;
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			paddingIMageY.at<uchar>(y + 1, x + 1) = input.at<uchar>(y, x);
+		}
+	}
+
+	paddingIMageY.convertTo(paddingIMageY, CV_32F);
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			float filterValue = 0.f;
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					filterValue += paddingIMageY.at<float>(y + i, x + j) * sobelY.at<float>(i, j);
+				}
+			}
+			sobelFilterImageY.at<float>(y, x) = filterValue;
+		}
+	}
+
+	sobelFilterImageY += 127;
+	sobelFilterImageY.convertTo(sobelFilterImageY, CV_8U);
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			paddingIMageX.at<uchar>(y + 1, x + 1) = input.at<uchar>(y, x);
+		}
+	}
+
+	paddingIMageX.convertTo(paddingIMageX, CV_32F);
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			float filterValue = 0.f;
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					filterValue += paddingIMageX.at<float>(y + i, x + j) * sobelX.at<float>(i, j);
+				}
+			}
+			sobelFilterImageX.at<float>(y, x) = filterValue;
+		}
+	}
+
+	sobelFilterImageX += 127;
+	sobelFilterImageX.convertTo(sobelFilterImageX, CV_8U);
+
+	sobelFilterImageX -= 127;
+	sobelFilterImageY -= 127;
+
+	for (int y = 0; y < height;  y++) {
+		for (int x = 0; x < width; x++) {
+			magnitudeSobelImage.at<uchar>(y, x) = sqrt(pow(sobelFilterImageX.at<uchar>(y, x), 2) + pow(sobelFilterImageY.at<uchar>(y, x), 2));
+		}
+	}
+
+	Mat window	= Mat::zeros(3, 3, CV_8U);
+	for (int y = 0; y < height - 2; y++) {
+		int middle = 0;
+		for (int x = 0; x < width - 2; x++) {
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					window.at<uchar>(i, j) = magnitudeSobelImage.at<uchar>(y + i, x + j);
+				}
+			}
+			middle = window.at<uchar>(1, 1);
+
+			if(middle < window.at<uchar>(0,0)	|| 
+				middle < window.at<uchar>(0,1)	|| 
+				middle < window.at<uchar>(0,2)	|| 
+				middle < window.at<uchar>(1,0)	|| 
+				middle < window.at<uchar>(1,2)	||
+				middle < window.at<uchar>(2,0)	|| 
+				middle < window.at<uchar>(2,1)	|| 
+				middle < window.at<uchar>(2,2))
+			{
+				nonMaximumSuppressionImage.at<uchar>(y + 1,x + 1) = 0;
+			} else {
+				nonMaximumSuppressionImage.at<uchar>(y + 1,x + 1) = middle;
+			}
+		}
+	}
+}

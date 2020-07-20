@@ -61,6 +61,8 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\medianFilterImage.png", medianFilterImage);
 	/**/
 
+	//Edge filter
+	/* 1. prewittFilter image
 	Mat prewittFilterImageX = Mat::zeros(height, width, CV_32F);
 	Mat prewittFilterImageY = Mat::zeros(height, width, CV_32F);
 
@@ -68,6 +70,19 @@ int main()
 
 	imwrite("E:\\project\\ComputerVision\\outputImage\\prewittFilterImageX.png", prewittFilterImageX);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\prewittFilterImageY.png", prewittFilterImageY);
+	/**/
+
+	Mat	sobelFilterImageX			= Mat::zeros(height, width, CV_32F);
+	Mat	sobelFilterImageY			= Mat::zeros(height, width, CV_32F);
+	Mat	magnitudeSobelImage			= Mat::zeros(height, width, CV_8U);
+	Mat	nonMaximumSuppressionImage	= Mat::zeros(height, width, CV_8U);
+
+	sobelFilter(inputImage, sobelFilterImageX, sobelFilterImageY, magnitudeSobelImage, nonMaximumSuppressionImage);	
+
+	imwrite("E:\\project\\ComputerVision\\outputImage\\sobelFilterImageX.png", sobelFilterImageX);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\sobelFilterImageY.png", sobelFilterImageY);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\magnitudeSobelImage.png", magnitudeSobelImage);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\nonMaximumSuppressionImage.png", nonMaximumSuppressionImage);
 
 	return 0;
 }

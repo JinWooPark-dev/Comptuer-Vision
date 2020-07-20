@@ -20,5 +20,10 @@ void prewittFilter(const	Mat input,					///< inputImage
 							Mat prewittFilterImageX,	///< prewittFilterImageX
 							Mat prewittFilterImageY);	///< prewittFilterImageY
 
-
+/// filtering the image by using sobel method also include magnitudeimage and nonmaximumsuppressionimage
+void sobelFilter(const		Mat input,							///< input image
+							Mat sobelFilterImageX,				///< sobelFilterImageX
+							Mat	sobelFilterImageY,				///< sobelFilterImageY
+							Mat magnitudeSobelImage,			///< magnitudeSobelImage
+							Mat nonMaximumSuppressionImage);	///< nonMaximumSuppressionImage
 #endif
