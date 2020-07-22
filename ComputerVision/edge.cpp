@@ -210,3 +210,55 @@ void sobelFilter(const		Mat input,						///< input image
 		}
 	}
 }
+
+/// filtering the image by using roberts method
+void robertsFilter(const	Mat input,					///< inputImage
+							Mat robertsFilterImageX,	///< robertsFilterImageX
+							Mat robertsFilterImageY)	///< robertsFilterImageY
+{
+	const int width		= input.cols;
+	const int height	= input.rows;
+
+	Mat robertsX	= Mat::zeros(2, 2, CV_32F);
+	Mat robertsY	= Mat::zeros(2, 2, CV_32F);
+
+	robertsX.at<float>(0, 0)	= 0;
+	robertsX.at<float>(0, 1)	= 1;
+	robertsX.at<float>(1, 0)	= -1;
+	robertsX.at<float>(1, 1)	= 0;
+
+	robertsY.at<float>(0, 0)	= 1;
+	robertsY.at<float>(0, 1)	= 0;
+	robertsY.at<float>(1, 0)	= 0;
+	robertsY.at<float>(1, 1)	= -1;
+
+	for (int y = 0; y < height - 1; y++) {
+		for (int x = 0; x < width - 1; x++) {
+			float filterValue = 0.f;
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 2; j++) {
+					filterValue += input.at<uchar>(y + i, x + j) * robertsY.at<float>(i, j);
+				}
+			}
+			robertsFilterImageY.at<float>(y, x) = filterValue;
+		}
+	}
+
+	robertsFilterImageY += 127;
+	robertsFilterImageY.convertTo(robertsFilterImageY, CV_8U);
+
+	for (int y = 0; y < height - 1; y++) {
+		for (int x = 0; x < width - 1; x++) {
+			float	filterValue = 0.f;
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 2; j++) {
+					filterValue += input.at<uchar>(y + i, x + j) * robertsX.at<float>(i, j);
+				}
+			}
+			robertsFilterImageX.at<float>(y, x) = filterValue;
+		}
+	}
+
+	robertsFilterImageX += 127;
+	robertsFilterImageX.convertTo(robertsFilterImageX, CV_8U);
+}

@@ -72,6 +72,7 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\prewittFilterImageY.png", prewittFilterImageY);
 	/**/
 
+	/* 2. sobelFilter image
 	Mat	sobelFilterImageX			= Mat::zeros(height, width, CV_32F);
 	Mat	sobelFilterImageY			= Mat::zeros(height, width, CV_32F);
 	Mat	magnitudeSobelImage			= Mat::zeros(height, width, CV_8U);
@@ -83,6 +84,15 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\sobelFilterImageY.png", sobelFilterImageY);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\magnitudeSobelImage.png", magnitudeSobelImage);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\nonMaximumSuppressionImage.png", nonMaximumSuppressionImage);
+	/**/
+
+	Mat	robertsFilterImageX	= Mat::zeros(height, width, CV_32F);
+	Mat	robertsFilterImageY	= Mat::zeros(height, width, CV_32F);
+
+	robertsFilter(inputImage, robertsFilterImageX, robertsFilterImageY);
+
+	imwrite("E:\\project\\ComputerVision\\outputImage\\robertsFilterImageX.png", robertsFilterImageX);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\robertsFilterImageY.png", robertsFilterImageY);
 
 	return 0;
 }

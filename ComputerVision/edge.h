@@ -26,4 +26,10 @@ void sobelFilter(const		Mat input,							///< input image
 							Mat	sobelFilterImageY,				///< sobelFilterImageY
 							Mat magnitudeSobelImage,			///< magnitudeSobelImage
 							Mat nonMaximumSuppressionImage);	///< nonMaximumSuppressionImage
+
+/// filtering the image by using roberts method
+void robertsFilter(const	Mat input,					///< inputImage
+							Mat robertsFilterImageX,	///< robertsFilterImageX
+							Mat robertsFilterImageY);	///< robertsFilterImageY
+
 #endif
