@@ -262,3 +262,33 @@ void robertsFilter(const	Mat input,					///< inputImage
 	robertsFilterImageX += 127;
 	robertsFilterImageX.convertTo(robertsFilterImageX, CV_8U);
 }
+
+/// hysteresisThresholding
+void hysteresisThreshold(const	Mat input,				///< inputImage
+								Mat highThreshold,		///< highThreshold value
+								Mat lowThreshold)		///< lowThreshold value
+{
+	const int width		= input.cols;
+	const int height	= input.rows;
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			if (input.at<uchar>(y, x) > 120) {
+				highThreshold.at<uchar>(y, x) = 255;
+			} else {
+				highThreshold.at<uchar>(y, x) = 0;
+			}
+		}
+	}
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			if (input.at<uchar>(y, x) > 70) {
+				lowThreshold.at<uchar>(y, x) = 255;
+			}
+			else {
+				lowThreshold.at<uchar>(y, x) = 0;
+			}
+		}
+	}		
+}

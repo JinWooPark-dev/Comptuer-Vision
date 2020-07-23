@@ -72,7 +72,7 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\prewittFilterImageY.png", prewittFilterImageY);
 	/**/
 
-	/* 2. sobelFilter image
+	// 2. sobelFilter image
 	Mat	sobelFilterImageX			= Mat::zeros(height, width, CV_32F);
 	Mat	sobelFilterImageY			= Mat::zeros(height, width, CV_32F);
 	Mat	magnitudeSobelImage			= Mat::zeros(height, width, CV_8U);
@@ -80,12 +80,13 @@ int main()
 
 	sobelFilter(inputImage, sobelFilterImageX, sobelFilterImageY, magnitudeSobelImage, nonMaximumSuppressionImage);	
 
-	imwrite("E:\\project\\ComputerVision\\outputImage\\sobelFilterImageX.png", sobelFilterImageX);
-	imwrite("E:\\project\\ComputerVision\\outputImage\\sobelFilterImageY.png", sobelFilterImageY);
-	imwrite("E:\\project\\ComputerVision\\outputImage\\magnitudeSobelImage.png", magnitudeSobelImage);
-	imwrite("E:\\project\\ComputerVision\\outputImage\\nonMaximumSuppressionImage.png", nonMaximumSuppressionImage);
+	//imwrite("E:\\project\\ComputerVision\\outputImage\\sobelFilterImageX.png", sobelFilterImageX);
+	//imwrite("E:\\project\\ComputerVision\\outputImage\\sobelFilterImageY.png", sobelFilterImageY);
+	//imwrite("E:\\project\\ComputerVision\\outputImage\\magnitudeSobelImage.png", magnitudeSobelImage);
+	//imwrite("E:\\project\\ComputerVision\\outputImage\\nonMaximumSuppressionImage.png", nonMaximumSuppressionImage);
 	/**/
 
+	/* 3. robertesFiltering
 	Mat	robertsFilterImageX	= Mat::zeros(height, width, CV_32F);
 	Mat	robertsFilterImageY	= Mat::zeros(height, width, CV_32F);
 
@@ -93,6 +94,15 @@ int main()
 
 	imwrite("E:\\project\\ComputerVision\\outputImage\\robertsFilterImageX.png", robertsFilterImageX);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\robertsFilterImageY.png", robertsFilterImageY);
+	/**/
+
+	Mat	highThreshold	= Mat::zeros(height, width, CV_8U);
+	Mat	lowThreshold	= Mat::zeros(height, width, CV_8U);
+
+	hysteresisThreshold(nonMaximumSuppressionImage, highThreshold, lowThreshold);
+
+	imwrite("E:\\project\\ComputerVision\\outputImage\\highThreshold.png", highThreshold);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\lowThreshold.png", lowThreshold);
 
 	return 0;
 }

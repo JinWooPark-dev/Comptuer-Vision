@@ -32,4 +32,9 @@ void robertsFilter(const	Mat input,					///< inputImage
 							Mat robertsFilterImageX,	///< robertsFilterImageX
 							Mat robertsFilterImageY);	///< robertsFilterImageY
 
+/// hysteresisThresholding
+void hysteresisThreshold(const	Mat input,				///< inputImage
+								Mat highThreshold,		///< highThreshold value
+								Mat lowThreshold);		///< lowThreshold value
+
 #endif
