@@ -37,4 +37,9 @@ void hysteresisThreshold(const	Mat input,				///< inputImage
 								Mat highThreshold,		///< highThreshold value
 								Mat lowThreshold);		///< lowThreshold value
 
+/// highThresholdimage and lowthresholdimage linking
+void edgeLinking(const	Mat highThresholdImage,					///< highThresholdImage
+						Mat lowThresholdImage,					///< lowThresholdImage
+						Mat	cannyEdgeImage);						///< cannyEdgeImage
+
 #endif

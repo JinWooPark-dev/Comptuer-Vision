@@ -292,3 +292,58 @@ void hysteresisThreshold(const	Mat input,				///< inputImage
 		}
 	}		
 }
+
+/// highThresholdimage and lowthresholdimage linking
+void edgeLinking(const	Mat highThresholdImage,					///< highThresholdImage
+						Mat lowThresholdImage,					///< lowThresholdImage
+						Mat	cannyEdgeImage)						///< cannyEdgeImage
+{
+	const	int	width	= highThresholdImage.cols;
+	const	int	height	= highThresholdImage.rows;
+
+	Mat low	= lowThresholdImage.clone();
+
+	for (int y = 0; y < height - 3; y++) {
+		for (int x = 0; x < width - 3; x++) {
+
+			if (highThresholdImage.at<uchar>(y, x) == 255) {
+
+				low.at<uchar>(y, x)	= 0;
+				cannyEdgeImage.at<uchar>(y, x)	= 255;
+
+				for (int i = 0; i < 3; i++) {
+					for (int j = 0; j < 3; j++) {
+
+						int valueX	= x;
+						int valueY	= y;
+
+						if (low.at<uchar>(valueY - 1 + i, valueX - 1 + j) == 255) {
+
+							low.at<uchar>(valueY - 1 + i, valueX - 1 + j) = 0;
+							cannyEdgeImage.at<uchar>(valueY - 1 + i, valueX - 1 + j)	= 255;
+
+							valueX	= x - 1 + j;
+							valueY	= y - 1 + i;
+
+							for (int k = 0; k < 3; k++) {
+								for (int m = 0; m < 3; m++) {
+									if (low.at<uchar>(valueY - 1 + k, valueX - 1 + m)	== 255) {
+										cannyEdgeImage.at<uchar>(valueY - 1 + i, valueX - 1 + j)	= 255;
+										low.at<uchar>(valueY - 1 + k, valueX - 1 + m)	= 0;
+
+										valueX	= valueX - 1 + m;
+										valueY	= valueY - 1 + k;
+
+										k = 0;
+										m = 0;
+									}
+								}
+							}
+						}
+
+					}
+				}
+			}
+		}
+	}
+}

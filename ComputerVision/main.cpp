@@ -101,8 +101,13 @@ int main()
 
 	hysteresisThreshold(nonMaximumSuppressionImage, highThreshold, lowThreshold);
 
-	imwrite("E:\\project\\ComputerVision\\outputImage\\highThreshold.png", highThreshold);
-	imwrite("E:\\project\\ComputerVision\\outputImage\\lowThreshold.png", lowThreshold);
+	//imwrite("E:\\project\\ComputerVision\\outputImage\\highThreshold.png", highThreshold);
+	//imwrite("E:\\project\\ComputerVision\\outputImage\\lowThreshold.png", lowThreshold);
+
+	Mat	cannyEdgeImage	= Mat::zeros(height, width, CV_8U);
+	edgeLinking(highThreshold, lowThreshold, cannyEdgeImage);
+
+	imwrite("E:\\project\\ComputerVision\\outputImage\\cannyEdgeImage.png", cannyEdgeImage);
 
 	return 0;
 }
