@@ -11,6 +11,7 @@
 */
 #include "image_filtering.h"
 #include "edge.h"
+#include "corner.h"
 
 int main()
 {
@@ -72,7 +73,7 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\prewittFilterImageY.png", prewittFilterImageY);
 	/**/
 
-	// 2. sobelFilter image
+	/* 2. sobelFilter image
 	Mat	sobelFilterImageX			= Mat::zeros(height, width, CV_32F);
 	Mat	sobelFilterImageY			= Mat::zeros(height, width, CV_32F);
 	Mat	magnitudeSobelImage			= Mat::zeros(height, width, CV_8U);
@@ -96,18 +97,27 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\robertsFilterImageY.png", robertsFilterImageY);
 	/**/
 
+	/* 4. hysteresis threshold
 	Mat	highThreshold	= Mat::zeros(height, width, CV_8U);
 	Mat	lowThreshold	= Mat::zeros(height, width, CV_8U);
 
 	hysteresisThreshold(nonMaximumSuppressionImage, highThreshold, lowThreshold);
 
-	//imwrite("E:\\project\\ComputerVision\\outputImage\\highThreshold.png", highThreshold);
-	//imwrite("E:\\project\\ComputerVision\\outputImage\\lowThreshold.png", lowThreshold);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\highThreshold.png", highThreshold);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\lowThreshold.png", lowThreshold);
+	/**/
 
+	/* 5. canny edge image
 	Mat	cannyEdgeImage	= Mat::zeros(height, width, CV_8U);
 	edgeLinking(highThreshold, lowThreshold, cannyEdgeImage);
 
 	imwrite("E:\\project\\ComputerVision\\outputImage\\cannyEdgeImage.png", cannyEdgeImage);
+	/**/
+
+	//Harris corner detection
+	Mat	harrisCornerImage	= Mat::zeros(height, width, CV_32F);
+
+	harrisCornerDetection(inputImage, harrisCornerImage);
 
 	return 0;
 }
