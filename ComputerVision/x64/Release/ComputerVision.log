@@ -1,13 +1,17 @@
-﻿빌드 시작: 2020-07-24 오후 7:30:47
+﻿빌드 시작: 2020-07-26 오후 7:25:22
      1>2 노드의 "E:\project\ComputerVision\ComputerVision\ComputerVision.vcxproj" 프로젝트(Build 대상)입니다.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /IC:\Users\gkgk1\Downloads\opencv\build\include\opencv2 /IC:\Users\gkgk1\Downloads\opencv\build\include\opencv /IC:\Users\gkgk1\Downloads\opencv\build\include /Zi /nologo /W3 /WX- /O2 /Oi /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc110.pdb" /Gd /TP /errorReport:prompt corner.cpp
-         corner.cpp
-     1>corner.cpp(114): warning C4244: '초기화 중' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-     1>corner.cpp(132): warning C4244: '=' : 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-     1>corner.cpp(145): warning C4244: '=' : 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /IC:\Users\gkgk1\Downloads\opencv\build\include\opencv2 /IC:\Users\gkgk1\Downloads\opencv\build\include\opencv /IC:\Users\gkgk1\Downloads\opencv\build\include /Zi /nologo /W3 /WX- /O2 /Oi /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc110.pdb" /Gd /TP /errorReport:prompt clustering.cpp main.cpp
+         clustering.cpp
+     1>clustering.cpp(35): warning C4244: '=' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>clustering.cpp(36): warning C4244: '=' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>clustering.cpp(93): warning C4244: '=' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>clustering.cpp(94): warning C4244: '=' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+         main.cpp
+     1>main.cpp(146): warning C4244: '인수' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"E:\project\ComputerVision\x64\Release\ComputerVision.exe" /NOLOGO /LIBPATH:C:\Users\gkgk1\Downloads\opencv\build\x64\vc14\lib opencv_calib3d2413.lib opencv_contrib2413.lib opencv_core2413.lib opencv_features2d2413.lib opencv_flann2413.lib opencv_gpu2413.lib opencv_highgui2413.lib opencv_imgproc2413.lib opencv_legacy2413.lib opencv_ml2413.lib opencv_nonfree2413.lib opencv_objdetect2413.lib opencv_ocl2413.lib opencv_photo2413.lib opencv_stitching2413.lib opencv_superres2413.lib opencv_ts2413.lib opencv_video2413.lib opencv_videostab2413.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\project\ComputerVision\x64\Release\ComputerVision.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\project\ComputerVision\x64\Release\ComputerVision.lib" /MACHINE:X64 x64\Release\corner.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"E:\project\ComputerVision\x64\Release\ComputerVision.exe" /NOLOGO /LIBPATH:C:\Users\gkgk1\Downloads\opencv\build\x64\vc14\lib opencv_calib3d2413.lib opencv_contrib2413.lib opencv_core2413.lib opencv_features2d2413.lib opencv_flann2413.lib opencv_gpu2413.lib opencv_highgui2413.lib opencv_imgproc2413.lib opencv_legacy2413.lib opencv_ml2413.lib opencv_nonfree2413.lib opencv_objdetect2413.lib opencv_ocl2413.lib opencv_photo2413.lib opencv_stitching2413.lib opencv_superres2413.lib opencv_ts2413.lib opencv_video2413.lib opencv_videostab2413.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\project\ComputerVision\x64\Release\ComputerVision.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\project\ComputerVision\x64\Release\ComputerVision.lib" /MACHINE:X64 x64\Release\clustering.obj
+         x64\Release\corner.obj
          x64\Release\edge.obj
          x64\Release\image_filtering.obj
          x64\Release\main.obj
@@ -18,4 +22,4 @@
 
 빌드했습니다.
 
-경과 시간: 00:00:07.82
+경과 시간: 00:00:09.67

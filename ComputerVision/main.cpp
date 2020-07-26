@@ -12,13 +12,16 @@
 #include "image_filtering.h"
 #include "edge.h"
 #include "corner.h"
+#include "clustering.h"
 
 int main()
 {
+	/*
 	Mat inputImage = imread("E:\\project\\ComputerVision\\inputImage\\son.jpg", 0);
 
 	int width	= inputImage.cols;
 	int height	= inputImage.rows;
+	/**/
 
 	//Image_Filtering
 	/* 1. boxFilter
@@ -113,11 +116,41 @@ int main()
 
 	imwrite("E:\\project\\ComputerVision\\outputImage\\cannyEdgeImage.png", cannyEdgeImage);
 	/**/
-
+	
+	/* 1. Corner detection
 	//Harris corner detection
 	Mat	harrisCornerImage	= Mat::zeros(height, width, CV_32F);
 
 	harrisCornerDetection(inputImage, harrisCornerImage);
+	/**/
 
+	enum{NUM_POINT  = 100};
+	enum{NUM_GROUP  = 3};
+
+	const   int height      = 500;
+	const   int width       = 1000;
+
+	vector<Point2f>	point(NUM_GROUP * NUM_POINT);
+	Mat draw    = Mat::zeros(height, width, CV_8UC3);
+	Mat outputImage    = Mat::zeros(height, width, CV_8UC3);
+
+	vector<Point>   center(NUM_GROUP);
+	center[0]   = Point(200, 100);
+	center[1]   = Point(400, 350);
+	center[2]   = Point(700, 200);
+	const   float   sigma   = 50;
+
+	RNG rng;
+	for (int i = 0; i < NUM_GROUP; i++) {
+		for (int j = 0; j < NUM_POINT; j++) {
+			point[i * NUM_POINT + j]    = Point2f(center[i].x + rng.gaussian(sigma), center[i].y + rng.gaussian(sigma));
+			circle(draw, point[i * NUM_POINT + j], 2, Scalar(255, 255, 255), 2);
+		}
+	}
+
+	k_meansClustering(draw, outputImage, point);
+
+	imwrite("E:\\project\\ComputerVision\\outputImage\\clusteringImage.png", outputImage);
+		
 	return 0;
 }

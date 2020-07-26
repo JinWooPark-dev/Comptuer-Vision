@@ -117,12 +117,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="clustering.cpp" />
     <ClCompile Include="corner.cpp" />
     <ClCompile Include="edge.cpp" />
     <ClCompile Include="image_filtering.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="clustering.h" />
     <ClInclude Include="corner.h" />
     <ClInclude Include="edge.h" />
     <ClInclude Include="header.h" />
