@@ -124,6 +124,7 @@ int main()
 	harrisCornerDetection(inputImage, harrisCornerImage);
 	/**/
 
+	/* Clustering
 	enum{NUM_POINT  = 100};
 	enum{NUM_GROUP  = 3};
 
@@ -151,6 +152,17 @@ int main()
 	k_meansClustering(draw, outputImage, point);
 
 	imwrite("E:\\project\\ComputerVision\\outputImage\\clusteringImage.png", outputImage);
-		
+	/**/
+	
+	Mat	inputImage	= imread("E:\\project\\ComputerVision\\inputImage\\native.jpg", 1);
+
+	int	width	= inputImage.cols;
+	int	height	= inputImage.rows;
+
+	Mat	outputImage	= Mat::zeros(height, width, CV_8UC3);
+
+	imageSegmentation(inputImage, outputImage, 15);
+	imwrite("E:\\project\\ComputerVision\\outputImage\\imageSegmentation.png", outputImage);
+
 	return 0;
 }

@@ -19,4 +19,7 @@ void k_meansClustering (const	Mat inputImage,			///< inputImage
 								Mat &outputImage,		///< outputImage
 								vector<Point2f> point);	///< circle Point 
 
+void imageSegmentation(const	Mat inputImage,		///< inputImage
+								Mat &outputImage,	///< outputImage
+								int kValue);			///< kvalue
 #endif
