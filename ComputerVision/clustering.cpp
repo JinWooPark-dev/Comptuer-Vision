@@ -209,3 +209,129 @@ void imageSegmentation(const	Mat inputImage,		///< inputImage
 		}
 	}
 }
+
+void imageSegmentationUsingColorSpace_Location(const	Mat inputImage,		///< inputImage
+														Mat &outputImage,	///< outputImage
+														int kValue)			///< k value
+{
+	const	int	width	= inputImage.cols;
+	const	int	height	= inputImage.rows;
+
+	vector<Mat> rgbImage(3);
+	split(inputImage, rgbImage);
+
+	Mat B	= Mat::zeros(height, width, CV_8UC1);
+	Mat G	= Mat::zeros(height, width, CV_8UC1);
+	Mat R	= Mat::zeros(height, width, CV_8UC1);
+
+	int groupingNum	= kValue;
+	double countGroup[15] = {0,};
+
+	vector<Mat>	kMat(groupingNum);
+	vector<Mat>	centerMat(groupingNum);
+
+	for (int i = 0; i < groupingNum; i++) {
+		kMat[i]			= Mat::zeros(1, 5, CV_32F);
+		centerMat[i]	= Mat::zeros(1, 5, CV_32F);	
+	}
+
+	vector<vector<vector<double>>>	distance(groupingNum);
+	for (int i = 0; i < groupingNum; i++) {
+		distance[i].resize(height);
+	}
+	for (int i = 0; i < groupingNum; i++) {
+		for (int j = 0; j < height; j++) {
+			distance[i][j].resize(width);
+		}
+	}
+
+	for (int i = 0; i < groupingNum; i++) {
+		Point2f tmp;
+		tmp.x	= (double)(rand() % width);
+		tmp.y	= (double)(rand() % height);
+		kMat[i].at<float>(0, 0)	= rgbImage[0].at<uchar>(tmp.y, tmp.x);
+		kMat[i].at<float>(0, 1)	= rgbImage[1].at<uchar>(tmp.y, tmp.x);
+		kMat[i].at<float>(0, 2)	= rgbImage[2].at<uchar>(tmp.y, tmp.x);
+		kMat[i].at<float>(0, 3)	= tmp.x;
+		kMat[i].at<float>(0, 4)	= tmp.y;
+	}
+
+	bool loop = true;
+
+	while (loop) {
+
+		for (int i = 0; i < groupingNum; i++ ) {
+			centerMat[i].at<float>(0, 0) = 0;
+			centerMat[i].at<float>(0, 1) = 0;
+			centerMat[i].at<float>(0, 2) = 0;
+			centerMat[i].at<float>(0, 3) = 0;
+			centerMat[i].at<float>(0, 4) = 0;
+			countGroup[i] = 0;
+		}
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				for (int j = 0; j < groupingNum; j++) {
+					double tmpDistance	= sqrt( pow( kMat[j].at<float>(0, 0) - rgbImage[0].at<uchar>(y, x), 2) + pow(kMat[j].at<float>(0, 1) - rgbImage[1].at<uchar>(y, x), 2) 
+												+ pow(kMat[j].at<float>(0, 2) - rgbImage[2].at<uchar>(y, x), 2) + pow(kMat[j].at<float>(0, 3) - x, 2) + pow(kMat[j].at<float>(0, 4) - y, 2));
+					distance[j][y][x] = tmpDistance;
+				}
+			}
+		}
+	
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+
+				double min = distance[0][y][x];
+				int minj	= 0;
+
+				for (int j = 1; j < groupingNum; j++) {
+					if (min > distance[j][y][x]) {
+						min = distance[j][y][x];
+						minj = j;
+					} else{}
+				}
+
+				centerMat[minj].at<float>(0, 0) += rgbImage[0].at<uchar>(y, x);
+				centerMat[minj].at<float>(0, 1) += rgbImage[1].at<uchar>(y, x);
+				centerMat[minj].at<float>(0, 2) += rgbImage[2].at<uchar>(y, x);
+				centerMat[minj].at<float>(0, 3) += x;
+				centerMat[minj].at<float>(0, 4) += y;
+
+				B.at<uchar>(y, x) = kMat[minj].at<float>(0, 0);
+				G.at<uchar>(y, x) = kMat[minj].at<float>(0, 1);
+				R.at<uchar>(y, x) = kMat[minj].at<float>(0, 2);
+
+				countGroup[minj]++;
+			}
+		}
+
+		int sameCount = 0; 
+		for (int i = 0; i < groupingNum; i++) {
+			if (countGroup[i] != 0) {
+
+				if (float((centerMat[i].at<float>(0, 0) / countGroup[i])) == kMat[i].at<float>(0, 0) && float((centerMat[i].at<float>(0, 1) / countGroup[i])) == kMat[i].at<float>(0, 1) 
+					&& float((centerMat[i].at<float>(0, 2) / countGroup[i])) == kMat[i].at<float>(0, 2) && float((centerMat[i].at<float>(0, 3) / countGroup[i])) == kMat[i].at<float>(0, 3)
+					&& float((centerMat[i].at<float>(0, 4) / countGroup[i])) == kMat[i].at<float>(0, 4)) {
+					sameCount++;
+				} else{}
+
+				kMat[i].at<float>(0, 0) = centerMat[i].at<float>(0, 0) / countGroup[i];
+				kMat[i].at<float>(0, 1) = centerMat[i].at<float>(0, 1) / countGroup[i];
+				kMat[i].at<float>(0, 2) = centerMat[i].at<float>(0, 2) / countGroup[i];
+				kMat[i].at<float>(0, 3) = centerMat[i].at<float>(0, 3) / countGroup[i];
+				kMat[i].at<float>(0, 4) = centerMat[i].at<float>(0, 4) / countGroup[i];
+			} else{}
+		}
+		if (sameCount > 3) {
+			loop = false;
+		} else{}
+	}
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			outputImage.at<Vec3b>(y,x)[0]	= B.at<uchar>(y,x);
+			outputImage.at<Vec3b>(y,x)[1]	= G.at<uchar>(y,x); 
+			outputImage.at<Vec3b>(y,x)[2]	= R.at<uchar>(y,x); 
+		}
+	}
+}

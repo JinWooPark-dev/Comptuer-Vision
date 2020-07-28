@@ -161,8 +161,14 @@ int main()
 
 	Mat	outputImage	= Mat::zeros(height, width, CV_8UC3);
 
+	/*
 	imageSegmentation(inputImage, outputImage, 15);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\imageSegmentation.png", outputImage);
+	*/
+
+	imageSegmentationUsingColorSpace_Location(inputImage, outputImage, 15);
+
+	imwrite("E:\\project\\ComputerVision\\outputImage\\imageSegmentationUsingColorSpace.png", outputImage);
 
 	return 0;
 }

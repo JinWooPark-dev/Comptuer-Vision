@@ -22,4 +22,8 @@ void k_meansClustering (const	Mat inputImage,			///< inputImage
 void imageSegmentation(const	Mat inputImage,		///< inputImage
 								Mat &outputImage,	///< outputImage
 								int kValue);			///< kvalue
+
+void imageSegmentationUsingColorSpace_Location(const	Mat inputImage,		///< inputImage
+														Mat &outputImage,	///< outputImage
+														int kValue);			///< k value
 #endif
