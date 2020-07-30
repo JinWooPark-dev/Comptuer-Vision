@@ -335,3 +335,141 @@ void imageSegmentationUsingColorSpace_Location(const	Mat inputImage,		///< input
 		}
 	}
 }
+
+void imageSegmentationUsingMeanShift(const	Mat inputImage,		///<inputImage
+											Mat &outputImage)	///<outputImage
+{
+	const	int	width	= inputImage.cols;
+	const	int	height	= inputImage.rows;
+
+	vector<Mat> rgbImage(3);
+	split(inputImage, rgbImage);
+
+	Mat BValue	= Mat::zeros(height, width, CV_8UC1);
+	Mat GValue	= Mat::zeros(height, width, CV_8UC1);
+	Mat RValue	= Mat::zeros(height, width, CV_8UC1);
+
+	int groupingNum	= 30;
+	double countGroup[30] = {0,};
+
+	vector<Mat>	kMat(groupingNum);
+	vector<Mat>	centerMat(groupingNum);
+
+	for (int i = 0; i < groupingNum; i++) {
+		kMat[i]			= Mat::zeros(1, 3, CV_32F);
+		centerMat[i]	= Mat::zeros(1, 3, CV_32F);	
+	}
+
+	vector<vector<vector<double>>>	distance(groupingNum);
+	for (int i = 0; i < groupingNum; i++) {
+		distance[i].resize(height);
+		for (int j = 0; j < height; j++) {
+			distance[i][j].resize(width);
+		}
+	}
+
+	for (int i = 0; i < groupingNum; i++) {
+		Point2f tmp;
+		tmp.x	= (double)(rand() % width);
+		tmp.y	= (double)(rand() % height);
+		
+		if ( i == 0 ) {
+		kMat[i].at<float>(0, 0)	= rgbImage[0].at<uchar>(237, 178);
+		kMat[i].at<float>(0, 1)	= rgbImage[1].at<uchar>(237, 178);
+		kMat[i].at<float>(0, 2)	= rgbImage[2].at<uchar>(237, 178);
+
+		}
+		else {
+		kMat[i].at<float>(0, 0)	= rgbImage[0].at<uchar>(tmp.y, tmp.x);
+		kMat[i].at<float>(0, 1)	= rgbImage[1].at<uchar>(tmp.y, tmp.x);
+		kMat[i].at<float>(0, 2)	= rgbImage[2].at<uchar>(tmp.y, tmp.x);
+		}
+	}
+
+	bool loop = true;
+
+	while (loop) {
+
+		for (int i = 0; i < groupingNum; i++ ) {
+			centerMat[i].at<float>(0, 0) = 0;
+			centerMat[i].at<float>(0, 1) = 0;
+			centerMat[i].at<float>(0, 2) = 0;
+			countGroup[i] = 0;
+		}
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				for (int j = 0; j < groupingNum; j++) {
+					double tmpDistance	= sqrt(pow(kMat[j].at<float>(0, 0) - rgbImage[0].at<uchar>(y, x), 2) + pow(kMat[j].at<float>(0, 1) - rgbImage[1].at<uchar>(y, x), 2) 
+												+ pow(kMat[j].at<float>(0, 2) - rgbImage[2].at<uchar>(y, x), 2));
+					distance[j][y][x] = tmpDistance;
+				}
+			}
+		}
+
+		for (int i = 0; i < groupingNum; i++) {
+
+			for (int y = 0; y < height; y++) {
+				for (int x = 0; x < width; x++) {
+					if (distance[i][y][x] < 20) {
+						centerMat[i].at<float>(0, 0) += rgbImage[0].at<uchar>(y, x);
+						centerMat[i].at<float>(0, 1) += rgbImage[1].at<uchar>(y, x);
+						centerMat[i].at<float>(0, 2) += rgbImage[2].at<uchar>(y, x);
+
+						BValue.at<uchar>(y, x) = kMat[i].at<float>(0, 0);
+						GValue.at<uchar>(y, x) = kMat[i].at<float>(0, 1);
+						RValue.at<uchar>(y, x) = kMat[i].at<float>(0, 2);
+
+						countGroup[i]++;
+					} else{}
+				}
+			}
+		}
+		int sameCount = 0; 
+		for (int i = 0; i < groupingNum; i++) {
+			if (countGroup[i] != 0) {
+
+				if (float((centerMat[i].at<float>(0, 0) / countGroup[i])) == kMat[i].at<float>(0, 0) && float((centerMat[i].at<float>(0, 1) / countGroup[i])) == kMat[i].at<float>(0, 1) 
+					&& float((centerMat[i].at<float>(0, 2) / countGroup[i])) == kMat[i].at<float>(0, 2)) {
+					sameCount++;
+					cout<<"sameCount "<<sameCount<<endl;
+				} else{}
+
+				kMat[i].at<float>(0, 0) = centerMat[i].at<float>(0, 0) / countGroup[i];
+				kMat[i].at<float>(0, 1) = centerMat[i].at<float>(0, 1) / countGroup[i];
+				kMat[i].at<float>(0, 2) = centerMat[i].at<float>(0, 2) / countGroup[i];
+			} else{}
+		}
+		if (sameCount > 3) {
+			loop = false;
+		} else{}
+	}
+
+	vector<vector<int>>	groupIndex(height);
+	for (int i = 0; i < height; i++) {
+		groupIndex[i].resize(width);
+	}
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			float	minDistance	= 9999999.f;
+			for (int i = 0; i < groupingNum; i++) {
+				float	distance	= SQR(inputImage.at<Vec3b>(y, x)[0] - kMat[i].at<float>(0, 0))
+									+ SQR(inputImage.at<Vec3b>(y, x)[1] - kMat[i].at<float>(0, 1))
+									+ SQR(inputImage.at<Vec3b>(y, x)[2] - kMat[i].at<float>(0, 2));
+				if (distance < minDistance) {
+					minDistance			= distance;
+					groupIndex[y][x]	= i;
+				} else{}
+			}
+		}
+	}
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			outputImage.at<Vec3b>(y,x)[0]	= kMat[groupIndex[y][x]].at<float>(0, 0);
+			outputImage.at<Vec3b>(y,x)[1]	= kMat[groupIndex[y][x]].at<float>(0, 1);
+			outputImage.at<Vec3b>(y,x)[2]	= kMat[groupIndex[y][x]].at<float>(0, 2);
+		}
+	}
+}

@@ -15,6 +15,11 @@
 
 #include "header.h"
 
+inline double	SQR(double	value)
+{
+	return	value * value;
+}
+
 void k_meansClustering (const	Mat inputImage,			///< inputImage
 								Mat &outputImage,		///< outputImage
 								vector<Point2f> point);	///< circle Point 
@@ -25,5 +30,8 @@ void imageSegmentation(const	Mat inputImage,		///< inputImage
 
 void imageSegmentationUsingColorSpace_Location(const	Mat inputImage,		///< inputImage
 														Mat &outputImage,	///< outputImage
-														int kValue);			///< k value
+														int kValue);		///< k value
+
+void imageSegmentationUsingMeanShift(const	Mat inputImage,		///<inputImage
+											Mat &outputImage);	///<outputImage
 #endif
