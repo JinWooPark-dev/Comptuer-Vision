@@ -13,6 +13,7 @@
 #include "edge.h"
 #include "corner.h"
 #include "clustering.h"
+#include "opticalFlow.h"
 
 int main()
 {
@@ -154,12 +155,14 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\clusteringImage.png", outputImage);
 	/**/
 	
+	/*
 	Mat	inputImage	= imread("E:\\project\\ComputerVision\\inputImage\\native.jpg", 1);
 
 	int	width	= inputImage.cols;
 	int	height	= inputImage.rows;
 
 	Mat	outputImage	= Mat::zeros(height, width, CV_8UC3);
+	*/
 
 	/*
 	imageSegmentation(inputImage, outputImage, 15);
@@ -170,9 +173,22 @@ int main()
 	imageSegmentationUsingColorSpace_Location(inputImage, outputImage, 15);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\imageSegmentationUsingColorSpace.png", outputImage);
 	*/
-
+	
+	/*
 	imageSegmentationUsingMeanShift(inputImage, outputImage);
 	imwrite("E:\\project\\ComputerVision\\outputImage\\imageSegmentationUsingMeanShift.png", outputImage);
+	*/
+
+	Mat	beforeImage	= imread("E:\\project\\ComputerVision\\inputImage\\yosemite0.png", 0);
+	Mat	afterImage	= imread("E:\\project\\ComputerVision\\inputImage\\yosemite1.png", 0);
+	
+	const	int	width	= beforeImage.cols;
+	const	int	height	= beforeImage.rows;
+
+	Mat outputImage	= Mat::zeros(height, width, CV_8UC3);
+
+
+	lukasKanadeOpticalFlow(beforeImage, afterImage, outputImage);
 
 	return 0;
 }

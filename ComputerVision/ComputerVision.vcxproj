@@ -122,6 +122,7 @@
     <ClCompile Include="edge.cpp" />
     <ClCompile Include="image_filtering.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="opticalFlow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="clustering.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="edge.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="image_filtering.h" />
+    <ClInclude Include="opticalFlow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
