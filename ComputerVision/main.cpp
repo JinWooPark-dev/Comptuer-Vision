@@ -14,6 +14,7 @@
 #include "corner.h"
 #include "clustering.h"
 #include "opticalFlow.h"
+#include "fitting.h"
 
 int main()
 {
@@ -179,6 +180,7 @@ int main()
 	imwrite("E:\\project\\ComputerVision\\outputImage\\imageSegmentationUsingMeanShift.png", outputImage);
 	*/
 
+	/*
 	Mat	beforeImage	= imread("E:\\project\\ComputerVision\\inputImage\\yosemite0.png", 0);
 	Mat	afterImage	= imread("E:\\project\\ComputerVision\\inputImage\\yosemite1.png", 0);
 	
@@ -187,8 +189,52 @@ int main()
 
 	Mat outputImage	= Mat::zeros(height, width, CV_8UC3);
 
-
 	lukasKanadeOpticalFlow(beforeImage, afterImage, outputImage);
+	*/
+
+	/*
+		line fitting
+	*/
+
+	enum{NUM_POINT  = 100};
+	const   int     height      = 500;
+	const   int     width       = 1000;
+	const   int     marginSize  = 200;
+	const   Point2f margin      = Point2f(float(marginSize), float(marginSize));
+
+	vector<Point2f> point(NUM_POINT);
+	Mat graph   = Mat::zeros(height + 2 * marginSize, width + 2 * marginSize, CV_8UC3);
+
+	const   float   mean    = 5.f;
+	const   float   sigma   = 5.f;
+	const   float   slope   = 0.5f;
+	const   float   bias    = 50.f;
+
+	RNG rng;
+	for (int i = 0; i < NUM_POINT; i++) {
+		point[i]    = Point2f(float(10 * i), slope * (10 * i) + bias) + Point2f(mean * rng.gaussian(sigma), mean * rng.gaussian(sigma));
+		circle(graph, point[i] + margin, 2, Scalar(255, 255, 255), 2);
+	}
+
+
+	vector<Point2f> noisePoint(2 * NUM_POINT);
+	Mat noiseGraph  = Mat::zeros(height + 2 * marginSize, width + 2 * marginSize, CV_8UC3);
+
+	const   float   largeSigma  = 10 * sigma;
+	for (int i = 0; i < NUM_POINT; i++) {
+		noisePoint[i]               = point[i];
+		noisePoint[i + NUM_POINT]   = Point2f(10 * i, slope * (10 * i) + bias) + Point2f(mean * rng.gaussian(largeSigma), mean * rng.gaussian(largeSigma));
+	}
+
+	for (int i = 0; i < 2 * NUM_POINT; i++) {
+		circle(noiseGraph, noisePoint[i] + margin, 2, Scalar(255, 255, 255), 2);
+	}
+
+	Mat	outputImage	= graph.clone();
+
+	lineFitting (graph, outputImage, point, 100, margin);
+	
+	imwrite("E:\\project\\ComputerVision\\outputImage\\lineFitting.png", outputImage);
 
 	return 0;
 }

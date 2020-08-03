@@ -120,6 +120,7 @@
     <ClCompile Include="clustering.cpp" />
     <ClCompile Include="corner.cpp" />
     <ClCompile Include="edge.cpp" />
+    <ClCompile Include="fitting.cpp" />
     <ClCompile Include="image_filtering.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="opticalFlow.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="clustering.h" />
     <ClInclude Include="corner.h" />
     <ClInclude Include="edge.h" />
+    <ClInclude Include="fitting.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="image_filtering.h" />
     <ClInclude Include="opticalFlow.h" />
