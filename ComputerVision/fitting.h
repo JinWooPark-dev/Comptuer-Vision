@@ -20,5 +20,11 @@ void lineFitting (	const	Mat				inputImage,		///< inputImage
 							Mat				&outputImage,	///< outputImage
 							vector<Point2f>	point,			///< circle point
 							int				numPoint,		///< Num of Point
-							Point			margin);			///< size of margin
+							Point			margin);		///< size of margin
+
+/// liineFitting using ransac method
+void lineFittingUsingRansac (	const	Mat				inputImage,		///< inputImage
+										Mat				&outputImage,	///< outputImage
+										vector<Point2f>	point,			///< circle point
+										Point			margin);			///< size of margin
 #endif

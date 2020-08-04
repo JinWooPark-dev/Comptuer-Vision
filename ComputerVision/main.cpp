@@ -231,10 +231,15 @@ int main()
 	}
 
 	Mat	outputImage	= graph.clone();
-
-	lineFitting (graph, outputImage, point, 100, margin);
 	
-	imwrite("E:\\project\\ComputerVision\\outputImage\\lineFitting.png", outputImage);
+	/*
+		lineFitting (graph, outputImage, point, 100, margin);	
+		imwrite("E:\\project\\ComputerVision\\outputImage\\lineFitting.png", outputImage);
+	*/
+	
+	lineFittingUsingRansac (noiseGraph,	outputImage, noisePoint, margin);
+
+	imwrite("E:\\project\\ComputerVision\\outputImage\\lineFittingUsingRansac.png", outputImage);
 
 	return 0;
 }
