@@ -15,6 +15,7 @@
 #include "clustering.h"
 #include "opticalFlow.h"
 #include "fitting.h"
+#include "houghTransform.h"
 
 int main()
 {
@@ -194,8 +195,6 @@ int main()
 
 	/*
 		line fitting
-	*/
-
 	enum{NUM_POINT  = 100};
 	const   int     height      = 500;
 	const   int     width       = 1000;
@@ -231,15 +230,31 @@ int main()
 	}
 
 	Mat	outputImage	= graph.clone();
-	
+	*/
 	/*
 		lineFitting (graph, outputImage, point, 100, margin);	
 		imwrite("E:\\project\\ComputerVision\\outputImage\\lineFitting.png", outputImage);
 	*/
-	
+
+	/*
 	lineFittingUsingRansac (noiseGraph,	outputImage, noisePoint, margin);
 
 	imwrite("E:\\project\\ComputerVision\\outputImage\\lineFittingUsingRansac.png", outputImage);
+	*/
+
+	/* houghTransform
+	*/
+
+	Mat inputImage = imread("E:\\project\\ComputerVision\\inputImage\\check.png", 0);
+
+	int	width	= inputImage.cols;
+	int	height	= inputImage.rows;
+
+	Mat	lineImage	= Mat::zeros(height, width, CV_8UC3);
+
+	lineDetectionUsingHoughTransform(inputImage, lineImage, 170, 1500, 180);
+
+	imwrite("E:\\project\\ComputerVision\\outputImage\\lineDetectionUsingHoughTransform.png", lineImage);
 
 	return 0;
 }
