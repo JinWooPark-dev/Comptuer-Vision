@@ -16,6 +16,7 @@
 #include "opticalFlow.h"
 #include "fitting.h"
 #include "houghTransform.h"
+#include "alignment.h"
 
 int main()
 {
@@ -243,7 +244,6 @@ int main()
 	*/
 
 	/* houghTransform
-	*/
 
 	Mat inputImage = imread("E:\\project\\ComputerVision\\inputImage\\check.png", 0);
 
@@ -255,6 +255,16 @@ int main()
 	lineDetectionUsingHoughTransform(inputImage, lineImage, 170, 1500, 180);
 
 	imwrite("E:\\project\\ComputerVision\\outputImage\\lineDetectionUsingHoughTransform.png", lineImage);
+	**/
+
+	/* Alignment
+	*/
+	Mat monalisa	= imread("E:\\project\\ComputerVision\\inputImage\\monalisa.png", 1);
+	Mat frame		= imread("E:\\project\\ComputerVision\\inputImage\\frame.png", 1);
+
+	afiineTransform(monalisa, frame);
+	
+	imwrite("E:\\project\\ComputerVision\\outputImage\\affineTransform.png", frame);
 
 	return 0;
 }

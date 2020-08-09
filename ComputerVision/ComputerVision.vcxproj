@@ -117,6 +117,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="alignment.cpp" />
     <ClCompile Include="clustering.cpp" />
     <ClCompile Include="corner.cpp" />
     <ClCompile Include="edge.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="opticalFlow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="alignment.h" />
     <ClInclude Include="clustering.h" />
     <ClInclude Include="corner.h" />
     <ClInclude Include="edge.h" />
