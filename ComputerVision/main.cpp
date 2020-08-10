@@ -259,12 +259,25 @@ int main()
 
 	/* Alignment
 	*/
+	/*
 	Mat monalisa	= imread("E:\\project\\ComputerVision\\inputImage\\monalisa.png", 1);
 	Mat frame		= imread("E:\\project\\ComputerVision\\inputImage\\frame.png", 1);
 
 	afiineTransform(monalisa, frame);
 	
 	imwrite("E:\\project\\ComputerVision\\outputImage\\affineTransform.png", frame);
+	**/
+
+	Mat krakow	= imread("E:\\project\\ComputerVision\\inputImage\\krakow.png", 1);
+	Mat paper	= imread("E:\\project\\ComputerVision\\inputImage\\paper.png", 1);
+
+	const	int	width	= krakow.cols;
+	const	int	height	= krakow.rows;
+	Mat topViewImage	= Mat::zeros(height, width, CV_8UC3);
+
+	homographyTransform(krakow, paper, topViewImage);
+
+	imwrite("E:\\project\\ComputerVision\\outputImage\\homographyTransform.png", topViewImage);
 
 	return 0;
 }
