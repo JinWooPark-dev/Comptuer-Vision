@@ -126,6 +126,7 @@
     <ClCompile Include="image_filtering.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="opticalFlow.cpp" />
+    <ClCompile Include="stereo_matching.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="alignment.h" />
@@ -137,6 +138,7 @@
     <ClInclude Include="houghTransform.h" />
     <ClInclude Include="image_filtering.h" />
     <ClInclude Include="opticalFlow.h" />
+    <ClInclude Include="stereo_matching.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -17,6 +17,7 @@
 #include "fitting.h"
 #include "houghTransform.h"
 #include "alignment.h"
+#include "stereo_matching.h"
 
 int main()
 {
@@ -267,7 +268,8 @@ int main()
 	
 	imwrite("E:\\project\\ComputerVision\\outputImage\\affineTransform.png", frame);
 	**/
-
+	
+	/*
 	Mat krakow	= imread("E:\\project\\ComputerVision\\inputImage\\krakow.png", 1);
 	Mat paper	= imread("E:\\project\\ComputerVision\\inputImage\\paper.png", 1);
 
@@ -278,6 +280,20 @@ int main()
 	homographyTransform(krakow, paper, topViewImage);
 
 	imwrite("E:\\project\\ComputerVision\\outputImage\\homographyTransform.png", topViewImage);
+	**/
+
+	/* stereo matching
+	**/
+	Mat leftImage	= imread("E:\\project\\ComputerVision\\inputImage\\tsukuba-imL.png", 0);
+	Mat rightImage	= imread("E:\\project\\ComputerVision\\inputImage\\tsukuba-imR.png", 0);
+	
+	int	width	= leftImage.cols;
+	int	height	= leftImage.rows;
+
+	Mat disparityMap	= Mat::zeros(height, width, CV_32F);
+	windowMatching(leftImage, rightImage, disparityMap, 3, 30);
+	
+	imwrite("E:\\project\\ComputerVision\\outputImage\\3x3_DisparityMap.png", disparityMap);
 
 	return 0;
 }
