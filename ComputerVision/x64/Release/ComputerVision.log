@@ -1,4 +1,4 @@
-﻿빌드 시작: 2020-08-11 오후 2:29:55
+﻿빌드 시작: 2020-08-12 오후 6:03:45
      1>2 노드의 "E:\project\ComputerVision\ComputerVision\ComputerVision.vcxproj" 프로젝트(Build 대상)입니다.
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /IC:\Users\gkgk1\Downloads\opencv\build\include\opencv2 /IC:\Users\gkgk1\Downloads\opencv\build\include\opencv /IC:\Users\gkgk1\Downloads\opencv\build\include /Zi /nologo /W3 /WX- /O2 /Oi /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc110.pdb" /Gd /TP /errorReport:prompt main.cpp
@@ -8,6 +8,7 @@
          x64\Release\clustering.obj
          x64\Release\corner.obj
          x64\Release\edge.obj
+         x64\Release\expectation_maximization.obj
          x64\Release\fitting.obj
          x64\Release\houghTransform.obj
          x64\Release\image_filtering.obj
@@ -21,4 +22,4 @@
 
 빌드했습니다.
 
-경과 시간: 00:00:03.54
+경과 시간: 00:00:04.37

@@ -18,6 +18,7 @@
 #include "houghTransform.h"
 #include "alignment.h"
 #include "stereo_matching.h"
+#include "expectation_maximization.h"
 
 int main()
 {
@@ -284,6 +285,7 @@ int main()
 
 	/* stereo matching
 	**/
+	/*
 	Mat leftImage	= imread("E:\\project\\ComputerVision\\inputImage\\tsukuba-imL.png", 0);
 	Mat rightImage	= imread("E:\\project\\ComputerVision\\inputImage\\tsukuba-imR.png", 0);
 	
@@ -294,6 +296,18 @@ int main()
 	windowMatching(leftImage, rightImage, disparityMap, 3, 30);
 	
 	imwrite("E:\\project\\ComputerVision\\outputImage\\3x3_DisparityMap.png", disparityMap);
+	**/
+
+	Mat clock		= imread("E:\\project\\ComputerVision\\inputImage\\clock.png", 0);
+	Mat clockPaint	= imread("E:\\project\\ComputerVision\\inputImage\\clock_paint.png", 1);
+
+	int	width	= clock.cols;
+	int	height	= clock.rows;
+
+	Mat	binarySegmentation	= Mat::zeros(height, width, CV_8U);	
+	expectationMaximization	(clock,	clockPaint,	binarySegmentation,	5);			
+
+	imwrite("E:\\project\\ComputerVision\\outputImage\\expectationMaximization.png", binarySegmentation);
 
 	return 0;
 }
